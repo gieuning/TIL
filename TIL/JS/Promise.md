@@ -99,10 +99,12 @@ login(user)
 ---
 
 ## ✅ Promise 메서드들
+| 메서드 | 설명               |
+|-----|------------------|
+| `then(onFulfilled, onRejected)`    | 성공 시 실행          |
+|  `catch(onRejected)`   |        실패 시 처리          |
+|  `catch(onRejected)`   | 성공/실패 관계없이 마지막에 실행 |
 
-- `then(onFulfilled, onRejected)`
-- `catch(onRejected)` – 실패 시 처리
-- `finally(onFinally)` – 성공/실패 관계없이 마지막에 실행
 
 ```js
 promise
