@@ -98,6 +98,21 @@ login(user)
 
 ---
 
+## ✅ Promise.all
+- 여러 개의 Promise를 동시에 실행하고 **모두 성공했을 때만** 처리
+
+```js
+const p1 = Promise.resolve(1);
+const p2 = Promise.resolve(2);
+const p3 = Promise.resolve(3);
+
+Promise.all([p1, p2, p3])
+    .then(results => console.log(results)) // [1, 2, 3]
+    .catch(error => console.error(error)); // 하나라도 실패하면 catch
+```
+
+---
+
 ## ✅ Promise 메서드들
 | 메서드 | 설명               |
 |-----|------------------|
