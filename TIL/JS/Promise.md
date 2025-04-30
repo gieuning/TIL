@@ -4,7 +4,8 @@
 
 ## ✅ Promise란?
 
-`Promise`는 **비동기 작업의 최종 완료 또는 실패를 나타내는 객체**입니다. 작업이 성공하면 `resolve`, 실패하면 `reject`를 호출하며 상태를 바꿉니다.
+> `Promise`는 **비동기 작업의 최종 완료 또는 실패를 나타내는 객체**입니다. 작업이 성공하면 `resolve`, 실패하면 `reject`를 호출하며 상태를 바꿉니다.
+즉, 내용이 실행은 되었지만 결과를 아직 반환하지 않은 객체라고 이해하면 될 거 같습니다. 
 
 ### 상태(state)
 - `pending` (대기): 아직 결과가 정해지지 않은 초기 상태
@@ -27,8 +28,9 @@ const executor = (resolve, reject) => {
 
 const promise = new Promise(executor);
 ```
-
+- `Promise`는 `Then`을 만나기전까지는 동기로 시작이 되며 `Then`을 만나는 순간 비동기로 실행이 됩니다.
 - `executor`는 반드시 전달되어야 하며, `resolve`, `reject`를 인자로 받습니다.
+- 성공 시 `resolve` 호출, 실패 시 `reject` 호출을 합니다.
 - `Promise` 객체가 생성되면 `executor`는 자동으로 실행됩니다.
 
 ---
@@ -62,6 +64,28 @@ promise
     .catch((error) => {
         console.log(error);
     });
+```
+
+---
+
+
+```js
+const condition = true;
+const promise = new Pomise((resolve, reject) => {
+    if (condition) {
+        resolve('성공');
+    } else {
+        reject('실패');
+    }
+});
+
+promise
+    .then((message) => {
+        console.log(message); // 성공(resolve) 한 경우 실행
+    })
+    .catch((error) => {
+        console.log(error); // 실패(reject) 한 경우 실행 
+    })
 ```
 
 ### ❗ 주의할 점
@@ -99,7 +123,8 @@ login(user)
 ---
 
 ## ✅ Promise.all
-- 여러 개의 Promise를 동시에 실행하고 **모두 성공했을 때만** 처리
+- 여러 개의 `Promise`를 동시에 실행하고 **모두 성공했을 때만** 처리
+  - 모든 작업이 성공해야 다음 작업을 할 때 사용
 
 ```js
 const p1 = Promise.resolve(1);
@@ -112,6 +137,28 @@ Promise.all([p1, p2, p3])
 ```
 
 ---
+
+## ✅  Promise.allSettled
+- 여러 개의 비동기 작업을 동시에 실행하고, 그 성공 여부에 관계없이 결과를 모두 수집하고 싶을 때 사용하는 메서드
+- 실패한 것만 추려낼 수 있다. 
+- `Promise.allSettled([promise1, promise2, ...])`
+    - 모든 `Promise`의 결과를 배열 형태로 변환
+```js
+const p1 = Promise.resolve(1);
+const p2 = Promise.reject('실패함');
+const p3 = Promise.resolve(3);
+
+Promise.allSettled([p1, p2, p3]).then(results => {
+  results.forEach((result, index) => {
+    if (result.status === 'fulfilled') {
+      console.log(`p${index + 1} 성공:`, result.value);
+    } else {
+      console.log(`p${index + 1} 실패:`, result.reason);
+    }
+  });
+});
+```
+
 
 ## ✅ Promise 메서드들
 | 메서드 | 설명               |
@@ -135,6 +182,6 @@ promise
 - `Promise`는 자바스크립트의 비동기 처리에 있어 필수적인 요소입니다.
 - 콜백 지옥을 피하고, 더 읽기 쉬운 코드를 작성할 수 있도록 도와줍니다.
 - `async/await`의 기반이 되는 개념이므로 반드시 이해하고 있어야 합니다.
-
+-  `Promise.all` 보다는 `Promise.allSettled`을 많이 사용하는 추세이다. 
 ---
 
