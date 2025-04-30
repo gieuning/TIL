@@ -57,6 +57,43 @@ run();
 
 ---
 
+
+**사용 예시 2**
+
+```js
+const promise = new Promise();
+
+async function main() {
+    const result = await promise;
+    return 'gieun..';
+}
+
+main().then((name) => {...})
+
+
+main()
+    .then(result => {
+        console.log(result);
+    })
+    .catch(error => {
+        console.error('에러 발생:', error);
+    });
+
+
+async function run() {
+    try {
+        const result = await main();
+        console.log(result);
+    } catch (error) {
+        console.error('에러 발생:', error);
+    }
+}
+```
+
+- `async`함수에서 반환을 한 것은 무조건 `메서드명.then()`을 해야합니다.
+    - `async`도 `promise` 이기 때문!!
+- `const name = await main()`도 방법
+
 ## ✅ async/await의 장점
 
 | 장점 | 설명 |
@@ -84,10 +121,12 @@ runAll();
 ```
 
 - 두 작업이 병렬로 진행되고, 둘 다 완료된 후 결과를 반환합니다.
-
 ---
 
 # 🔥 마무리
 
 `async/await`은 Promise를 더 쉽고, 직관적으로 다룰 수 있게 해주는 강력한 문법입니다.  
 비동기 코드를 작성할 때 가독성과 유지보수성을 크게 향상시킬 수 있으니 꼭 알야아합니다.!!
+
+- `async` 함수는 항상 `promise`를 반환
+- `await`은 `Promise.then()`을 대체하는 것을 기억합시다!
