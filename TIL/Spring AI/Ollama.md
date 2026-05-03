@@ -29,6 +29,15 @@ docker exec -it ollama ollama list
 
 ### Dependencies 추가
 ```text
+dependencyManagement {
+	imports {
+		mavenBom "org.springframework.cloud:spring-cloud-dependencies:2023.0.2"
+		// Spring AI 추가
+		mavenBom "org.springframework.ai:spring-ai-bom:1.0.0-M6"
+	}
+}
+
+
 dependencies {
     // Ollama 연동을 위한 스타터
     implementation 'org.springframework.ai:spring-ai-ollama-spring-boot-starter'
@@ -138,3 +147,18 @@ public class OllamaService {
 }
 ```
 
+
+OllamaOptions는 AI 모델 호출 시 동작 방식을 세밀하게 제어하는 옵션입니다.
+
+temperature — 답변의 창의성/무작위성 조절
+- 0.0 : 항상 가장 확률 높은 단어 선택 → 일관되고 정확한 답변
+- 1.0 : 다양한 단어 선택 → 창의적이지만 예측 불가능한 답변
+
+예를 들어:
+- 코드 생성, 사실 질문 → temperature: 0.1~0.3 (정확성 중요)
+- 스토리 작성, 아이디어 브레인스토밍 → temperature: 0.7~1.0 (창의성 중요)
+
+OllamaOptions.builder()는 이 외에도 model, topP, seed 등 다양한 옵션을 체이닝으로 추가할 수 있습니다.
+
+
+![img.png](img.png)
